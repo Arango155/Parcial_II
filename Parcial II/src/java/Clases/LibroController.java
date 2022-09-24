@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class LibroController {
       Libro[] tablaLibro;
     int indiceArray;
-    
+    private ConexionBaseDeDatos conectorBD;
     private Connection conexion;
     private PreparedStatement statement = null;
     private ResultSet result = null;
@@ -33,7 +33,8 @@ public class LibroController {
     }
     
     public void abrirConexion(){
-        
+         conectorBD= new ConexionBaseDeDatos();
+        conexion=conectorBD.conectar();
         
     }    
    
