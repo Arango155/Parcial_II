@@ -140,30 +140,31 @@ function enviarFormularioOpcion2(){
               console.log("response => " + XHR.response);
               //console.log("response xml=> " + XHR.responseXML);
               document.getElementById('bodyTable').innerHTML=XHR.response;
-              mostrarMensaje('Estudiante guardado exitosamente');
+              mostrarMensaje();
               limpiarFormulario();
             }
-          };   
+          };
+          
           XHR.send(formData);         
 }
 
-
 function limpiarFormulario(){
     document.getElementById("codigo").value='';
-    document.getElementById("nombre").value='';
-    document.getElementById("correo").value='';
-    document.getElementById("direccion").value='';
+    document.getElementById("nombre_libro").value='';
+    document.getElementById("tipo_de_pasta").value='';
+    document.getElementById("editorial").value='';
+    document.getElementById("anio_publicacion").value='';
 }
 
-function mostrarMensaje(mensaje){
+function mostrarMensaje(){
   Swal.fire({
-    icon: 'success',
-    title: mensaje,
-    showConfirmButton: false,
-    timer: 1500
-    })
+  icon: 'success',
+  title: 'Estudiante guardado exitosamente',
+  showConfirmButton: false,
+  timer: 1500
+})
 }
-
+      
 function eliminarAlumno(codigo){
     const XHR = new XMLHttpRequest();
     var formData = new URLSearchParams(new FormData());
@@ -188,6 +189,4 @@ function eliminarAlumno(codigo){
     formData.append('control', 'ELIMINAR');
     XHR.send(formData); 
     
-}    
-        
-
+}

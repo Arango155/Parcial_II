@@ -1,3 +1,4 @@
+
 package Clases;
 
 public class Libro {
@@ -5,10 +6,10 @@ public class Libro {
     private String nombre_libro;
     private String tipo_de_pasta;
     private String editorial;
-    private int anio_publicacion;
+    private String anio_publicacion;
 
     
-    public Libro (int codigo, String nombre_libro, String tipo_de_pasta, String editorial, int anio_publicacion){
+    public Libro(int codigo, String nombre_libro, String tipo_de_pasta, String editorial, String anio_publicacion){
         this.codigo=codigo;
         this.nombre_libro=nombre_libro;
         this.tipo_de_pasta=tipo_de_pasta;
@@ -16,7 +17,7 @@ public class Libro {
         this.anio_publicacion=anio_publicacion;   
     }
     
-    public Libro (){
+    public Libro(){
         this.nombre_libro="Alumno de ejemplo";
     }
 
@@ -52,14 +53,14 @@ public class Libro {
         this.editorial = editorial;
     }
 
-    public int getAnio_publicacion() {
+    public String getAnio_publicacion() {
         return anio_publicacion;
     }
 
-    public void setAnio_publicacion(int anio_publicacion) {
+    public void setAnio_publicacion(String anio_publicacion) {
         this.anio_publicacion = anio_publicacion;
     }
 
     
-  
+    
 }

@@ -1,3 +1,4 @@
+
 import Clases.Libro;
 import Clases.LibroController;
 import Clases.ConexionBaseDeDatos;
@@ -14,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 public class NewServlet extends HttpServlet {
     Libro libro;
     LibroController registroLibro;
-     Libro[] LibrosRegistrados;
-     StringBuffer objetoRespuesta = new StringBuffer();
+     Libro[] librosRegistrados;
+
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,45 +40,42 @@ public class NewServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter respuesta = response.getWriter()) {            
-           
-           registroLibro=new LibroController();
-           String control = request.getParameter("control");
-           
-           if(control.toUpperCase().equals("GUARDAR")){
-               libro=new Libro(
+            libro=new Libro(
                 Integer.parseInt(request.getParameter("codigo")),
                 request.getParameter("nombre_libro"),
                 request.getParameter("tipo_de_pasta"),
                 request.getParameter("editorial"),
-                Integer.parseInt(request.getParameter("anio_de_publicacion")));                
-                registroLibro.guardarLibro2(libro);//almacenarlo en BD                 
-           }else if(control.toUpperCase().equals("ELIMINAR")){
-               int codigoEliminar= Integer.parseInt(request.getParameter("codigo_libro"));
-               registroLibro.eliminarLibro(codigoEliminar);
-           }
+                request.getParameter("anio_publicacion")
+                
+            );               
                         
-            
-            registroLibro.guardarAlumno(libro);//almacenarlo en el array
-            LibrosRegistrados= registroLibro.getLibro();// consultar alumnos en el array                       
-                    
-           registroLibro.getLibro2(objetoRespuesta);//consultar alumnos en la BD
-           respuesta.write(objetoRespuesta.toString());             
-            
+            if(registroLibro==null){
+                 registroLibro=new LibroController();
+            }
            
-            for (int i = 0; i < LibrosRegistrados.length; i++){
-                   //if(!alumnosRegistrados[i].getCodigo().isEmpty()){
-                    if(LibrosRegistrados[i].getCodigo()>0){
-                       respuesta.println("<tr><td>" + LibrosRegistrados[i].getCodigo()+ "</td>");
-                       respuesta.println("<td>" + LibrosRegistrados[i].getNombre_libro() + "</td>");
-                       respuesta.println("<td>" + LibrosRegistrados[i].getTipo_de_pasta()+ "</td>");
-                       respuesta.println("<td>" + LibrosRegistrados[i].getEditorial()+ "</td>");
-                       respuesta.println("<td>" + LibrosRegistrados[i].getAnio_publicacion()+ "</td>");
+            registroLibro.guardarLibro(libro);//almacenarlo en el array
+            
+           if(registroLibro.getLibro2(libro)){//almacenarlo en BD
+               respuesta.println(1);
+           }else{
+               respuesta.println(0);
+           }
+            librosRegistrados= registroLibro.getLibro();           
+           
+            for (int i = 0; i < librosRegistrados.length; i++){
+                    if(librosRegistrados[i].getCodigo()>0){
+                       respuesta.println("<tr><td>" + librosRegistrados[i].getCodigo()+ "</td>");
+                       respuesta.println("<td>" + librosRegistrados[i].getNombre_libro() + "</td>");
+                       respuesta.println("<td>" + librosRegistrados[i].getTipo_de_pasta()+ "</td>");
+                       respuesta.println("<td>" + librosRegistrados[i].getEditorial()+ "</td>");
+                       respuesta.println("<td>" + librosRegistrados[i].getAnio_publicacion()+ "</td>");
                        respuesta.println("<td>"
                                + "<button type=\"button\" class=\"btn btn-warning\"></i>Editar</button> "
-                               + "<button type=\"button\" class=\"btn btn-danger\">Eliminar</button>"
+                               + "<button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminarAlumno()\">Eliminar</button>"
                                + "</td></tr>");
                     }
                 }
+            //respuesta.println(1);
         }
     }
 
